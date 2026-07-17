@@ -24,7 +24,7 @@ function Home() {
   async function fetchPublicBlogs() {
     try {
       const res = await axios.get(
-        "http://localhost:5000/blogs/public"
+        "https://blogsphere-5590.onrender.com/blogs/public"
       );
 
       setBlogs(res.data);
@@ -40,7 +40,7 @@ function Home() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/blogs/my",
+        "https://blogsphere-5590.onrender.com/blogs/my",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,82 +58,74 @@ function Home() {
 
   return (
     <div className="bg-black min-h-screen text-white">
+      <Header />
 
-  <Header />
+      <Hero blogs={blogs} />
 
-  <Hero blogs={blogs} />
+      {/* Tabs */}
 
-  {/* Tabs */}
+      <div className="max-w-7xl mx-auto px-6 mt-12">
+        <div className="flex justify-center">
+          <div className="bg-slate-900 rounded-2xl p-2 flex gap-3 shadow-xl">
+            <button
+              onClick={fetchPublicBlogs}
+              className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                activeTab === "public"
+                  ? "bg-gradient-to-r from-cyan-500 to-blue-600"
+                  : "bg-slate-800 hover:bg-slate-700"
+              }`}
+            >
+              🌍 Public Blogs
+            </button>
 
-  <div className="max-w-7xl mx-auto px-6 mt-12">
-
-    <div className="flex justify-center">
-
-      <div className="bg-slate-900 rounded-2xl p-2 flex gap-3 shadow-xl">
-
-        <button
-          onClick={fetchPublicBlogs}
-          className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 ${
-            activeTab === "public"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600"
-              : "bg-slate-800 hover:bg-slate-700"
-          }`}
-        >
-          🌍 Public Blogs
-        </button>
-
-        <button
-          onClick={fetchMyBlogs}
-          className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 ${
-            activeTab === "my"
-              ? "bg-gradient-to-r from-purple-500 to-pink-600"
-              : "bg-slate-800 hover:bg-slate-700"
-          }`}
-        >
-          👤 My Blogs
-        </button>
-
+            <button
+              onClick={fetchMyBlogs}
+              className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                activeTab === "my"
+                  ? "bg-gradient-to-r from-purple-500 to-pink-600"
+                  : "bg-slate-800 hover:bg-slate-700"
+              }`}
+            >
+              👤 My Blogs
+            </button>
+          </div>
+        </div>
       </div>
 
-    </div>
+      {/* Show only in My Blogs */}
 
-  </div>
+      {activeTab === "my" && (
+        <>
+          <Dashboard blogs={blogs} />
 
-  {/* Show only in My Blogs */}
+          <BlogForm
+            fetchBlogs={fetchMyBlogs}
+            editingBlog={editingBlog}
+            setEditingBlog={setEditingBlog}
+          />
+        </>
+      )}
 
-  {activeTab === "my" && (
-    <>
-      <Dashboard blogs={blogs} />
-
-      <BlogForm
-        fetchBlogs={fetchMyBlogs}
-        editingBlog={editingBlog}
-        setEditingBlog={setEditingBlog}
+      <SearchFilter
+        blogs={blogs}
+        setFilteredBlogs={setFilteredBlogs}
       />
-    </>
-  )}
 
-  <SearchFilter
-    blogs={blogs}
-    setFilteredBlogs={setFilteredBlogs}
-  />
+      <BlogCard
+        blogs={filteredBlogs}
+        fetchBlogs={
+          activeTab === "my"
+            ? fetchMyBlogs
+            : fetchPublicBlogs
+        }
+        setEditingBlog={setEditingBlog}
+        isMyBlogs={activeTab === "my"}
+      />
 
-  <BlogCard
-    blogs={filteredBlogs}
-    fetchBlogs={
-      activeTab === "my"
-        ? fetchMyBlogs
-        : fetchPublicBlogs
-    }
-    setEditingBlog={setEditingBlog}
-    isMyBlogs={activeTab === "my"}
-  />
+      <FAQ />
 
-  <FAQ />
-
-  <Footer />
-
-</div>
+      <Footer />
+    </div>
   );
 }
 

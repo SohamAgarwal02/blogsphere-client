@@ -14,7 +14,7 @@ function Signup() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/auth/signup",
+        "https://blogsphere-5590.onrender.com/auth/signup",
         {
           name,
           email,
@@ -32,12 +32,10 @@ function Signup() {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-black">
-
       <form
         onSubmit={handleSignup}
         className="bg-gray-900 p-10 rounded-2xl w-96 shadow-xl"
       >
-
         <h2 className="text-3xl font-bold text-center text-white mb-8">
           Signup
         </h2>
@@ -66,9 +64,7 @@ function Signup() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button
-          className="w-full bg-green-600 hover:bg-green-700 p-3 rounded font-bold"
-        >
+        <button className="w-full bg-green-600 hover:bg-green-700 p-3 rounded font-bold">
           Signup
         </button>
 
@@ -81,9 +77,7 @@ function Signup() {
             Login
           </Link>
         </p>
-
       </form>
-
     </div>
   );
 }

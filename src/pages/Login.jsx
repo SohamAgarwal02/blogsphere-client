@@ -13,7 +13,7 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/auth/login",
+        "https://blogsphere-5590.onrender.com/auth/login",
         {
           email,
           password,
@@ -32,12 +32,10 @@ function Login() {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-black">
-
       <form
         onSubmit={handleLogin}
         className="bg-gray-900 p-10 rounded-2xl w-96 shadow-xl"
       >
-
         <h2 className="text-3xl font-bold text-center text-white mb-8">
           Login
         </h2>
@@ -58,9 +56,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button
-          className="w-full bg-cyan-500 hover:bg-cyan-600 p-3 rounded font-bold"
-        >
+        <button className="w-full bg-cyan-500 hover:bg-cyan-600 p-3 rounded font-bold">
           Login
         </button>
 
@@ -73,9 +69,7 @@ function Login() {
             Signup
           </Link>
         </p>
-
       </form>
-
     </div>
   );
 }
