@@ -1,10 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Login() {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,12 +18,18 @@ function Login() {
         }
       );
 
+      // Save token
       localStorage.setItem("token", res.data.token);
+
+      console.log("Token Saved:", res.data.token);
 
       alert("Login Successful ✅");
 
-      navigate("/home");
+      // Force redirect
+      window.location.href = "/home";
     } catch (err) {
+      console.error(err);
+
       alert(err.response?.data?.message || "Login Failed");
     }
   }
@@ -46,6 +50,7 @@ function Login() {
           className="w-full p-3 rounded bg-gray-800 text-white mb-4"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
@@ -54,9 +59,13 @@ function Login() {
           className="w-full p-3 rounded bg-gray-800 text-white mb-6"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
-        <button className="w-full bg-cyan-500 hover:bg-cyan-600 p-3 rounded font-bold">
+        <button
+          type="submit"
+          className="w-full bg-cyan-500 hover:bg-cyan-600 p-3 rounded font-bold"
+        >
           Login
         </button>
 
